@@ -16,11 +16,22 @@ module.exports = function (sequelize, DateTypes) {
         	}
         }
 
-      })
+      }, {
+           
+           hooks: {
+           	beforeValidate: function (user, options) {
+               // user.email in lower case
+               if (typeof user.email === 'string') {
+                   user.email = user.email.toLowerCase();   
+
+               }
 
 
 
+           	}
+           }
 
 
+      });
 
-}
+};
