@@ -11,22 +11,18 @@ var todoNextId = 1;
 
 app.use(bodyParser.json());
 
-// var todos =[{
-//  id:1,	
-//  description: 'Meet ben for lunch',
-//  completed: false
-// }, {
-// 	id:2,
-// 	description: 'Go to market',
-// 	completed: false
-// }];
+
+
+
 
 app.get('/', function (req,res) {
 
      res.send('Todo API Root');
 });
 
-// GET / todos?completed:true&q=work
+
+
+
 app.get('/todos', function (req,res) {
   var query = req.query;
   var where = {};
@@ -50,28 +46,6 @@ app.get('/todos', function (req,res) {
   });
 
 
-  // var filteredTodos = todos;
-  // if(queryParams.hasOwnProperty('completed') && queryParams.completed === 'true'){
-  // 	filteredTodos = _.where(filteredTodos,{completed: true});
-  // } else if (queryParams.hasOwnProperty('completed') && queryParams.completed === 'false') {
-  //    filteredTodos = _.where(filteredTodos, {completed: false}) ;  
-
-  // }
-
-  // if(queryParams.hasOwnProperty('q') && queryParams.q.length > 0) {
-  // 	filteredTodos = _.filter(filteredTodos, function (todo) {
-  // 		return todo.description.toLowerCase().indexOf(queryParams.q.toLowerCase()) > -1;
-
-  // 	});
-  // }
-
-  // "Go to work on Saturday".indexOf('work')
-  // if has property && completed === 'true'
-  // filteredtodos = _.where(filteredtodo, ??completed
-  // else if has prop && completed if 'false'
-
-
-  // res.json(filteredTodos);
 
 });
 
@@ -105,26 +79,7 @@ app.get('/todos/:id', function (req,res) {
 
 
 
-       // var matchedTodo;
-      //  var matchedTodo = _.findWhere(todos, {id: todoId});
-
-      //  // todos.forEach(function (todo) {
-      //  //      if (todoId === todo.id) {
-      //  //      	matchedTodo = todo;
-      //  //      }
-
-      //  // });
       
-      // if (matchedTodo) {
-      //         res.json(matchedTodo);
-
-      // } else {
-      // 	res.status(404).send();
-      // }
-        
-       //Iterate of todos array. Find the match
-       
-       // res.send('Asking for todo with id of ' + req.params.id)
 });
 
 // POST /todos/
@@ -139,35 +94,6 @@ app.post('/todos', function (req, res) {
          res.status(400).json(e);
     });
 
-// call create on db.todo
-// respond with 200 and todo
-//  res.status(400).json(e)
-
-
-
-// if (!_.isBoolean(body.completed) || !_.isString(body.description) || body.description.trim().lenth === 0) {
-//     return res.status(400).send(); 
-
-// }
-
-// body.description = body.description.trim();
-
-// //set body.description to be trimmed value
-
-
-
-//  //add id field
-//    body.id = todoNextId;
-//    todoNextId++;
-
-//  //push body into array
-//  todos.push(body);
-//  res.json(body);
-
-
-//  // console.log('description: ' + body.description);
-
-// // res.json(body);
 
 
 });
@@ -195,15 +121,7 @@ app.delete('/todos/:id', function (req, res) {
     });
 
 
-    // var matchedTodo = _.findWhere(todos, {id: todoId});
-   
-    // if (!matchedTodo) {
-    //    res.status(404).json({"error": " no todo found with that id"});
-
-    // }else {
-    // 	todos = _.without(todos, matchedTodo);
-    //     res.json(matchedTodo);
-    // }
+  
 });
 
 // PUT /todos?:id
@@ -213,26 +131,12 @@ app.put('/todos/:id', function (req, res) {
     var body = _.pick(req.body, 'description', 'completed');
    // var validAttributes = {};
    var attributes = {};
-    // if (!matchedTodo) {
-    // 	return res.status(404).send();
-    // }
-	// if (body.hasOwnProperty('completed')  && _.isBoolean(body.completed)) {
-	// 	validAttributes.completed = body.completed;
-	// } else if (body.hasOwnProperty('completed')) {
- //              //Bad
- //         return res.status(400).send();     
+      
 	// } 
 	if (body.hasOwnProperty('completed')) {
 		attributes.completed = body.completed;
 	} 
 
-
- //   if (body.hasOwnProperty('description')  && _.isString(body.description) && body.description.trim().length > 0) {
-	// 	validAttributes.description = body.description;
-	// } else if (body.hasOwnProperty('description')) {
- //              //Bad
- //         return res.status(400).send();     
-	// } 
 
 
     if (body.hasOwnProperty('description')) {
@@ -284,7 +188,7 @@ app.post('/users/login', function (req, res) {
   
 
   db.user.authenticate(body).then(function (user) {
-      res.json(user.toPublicJSON());
+      res.header('Auth', user.generateToken('authentication')).json(user.toPublicJSON());
 
 
   }, function () {
