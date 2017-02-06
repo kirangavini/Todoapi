@@ -25,6 +25,7 @@ var User = sequelize.define('user', {
 
 });
 
+
 Todo.belongsTo(User);
 User.hasMany(Todo);
 
@@ -71,6 +72,7 @@ sequelize.sync({
      //      User.findById(1).then(function (user) {
      //         user.addTodo(todo);
      //      }); 
+     
 
 
      //   });
